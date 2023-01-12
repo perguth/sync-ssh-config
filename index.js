@@ -111,8 +111,8 @@ class SyncSshConfig {
       this.conf.ssh = fs.readFileSync(this.path.ssh, 'utf8')
     } catch (_) {
       const folderPath = /^(.*\/)/g.exec(this.path.swarm)[0]
-      fs.mkdirSync(folderPath, { mode: 0o700 })
-      fs.writeFileSync(this.path.ssh, '', { flag: 'a', mode: 0o644 })
+      fs.mkdirSync(folderPath, { mode: 0o700, recursive: true })
+      fs.writeFileSync(this.path.ssh, '', { mode: 0o644, flag: 'a' })
       console.log('Created config file:', this.path.ssh)
       fs.utimesSync(this.path.ssh, new Date(0), date)
     }
