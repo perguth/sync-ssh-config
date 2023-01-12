@@ -1,0 +1,10 @@
+[Unit]
+Description=Syncs your SSH config
+Documentation=https://github.com/perguth/sync-ssh-config
+
+[Service]
+Type=simple
+ExecStart=node /opt/sync-ssh-config/index.js
+
+[Install]
+WantedBy=multi-user.target
