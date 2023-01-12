@@ -107,6 +107,7 @@ class SyncSshConfig {
       this.conf.ssh = fs.readFileSync(this.path.ssh, 'utf8')
     } catch (_) {
       console.error(`SSH config is missing under ${this.path.ssh}`)
+      process.exit(1)
     }
 
     if (this.conf.swarm.sharedSecret !== this.conf.swarm.previousSharedSecret) {
