@@ -1,7 +1,5 @@
 # Sync SSH Config
 
-> Syncs your SSH config
-
 This script:
 
 - **Watches** your `~/.ssh/config` for changes
