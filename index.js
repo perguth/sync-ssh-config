@@ -101,7 +101,11 @@ class SyncSshConfig {
     }
 
     if (!this.path.ssh) {
-      this.path.ssh = `/home/${this.conf.swarm.userName}/.ssh/config`
+      if (this.conf.swarm.userName === 'root') {
+        this.path.ssh = `/${this.conf.swarm.userName}/.ssh/config`
+      } else {
+        this.path.ssh = `/home/${this.conf.swarm.userName}/.ssh/config`
+      }
     }
     try {
       this.conf.ssh = fs.readFileSync(this.path.ssh, 'utf8')
