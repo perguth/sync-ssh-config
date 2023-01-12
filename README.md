@@ -10,6 +10,9 @@ This script:
 ## Install
 
 ```bash
+# Install NodeJS
+# https://nodejs.org/en/download/package-manager/
+
 # Install the systemd service
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/perguth/sync-ssh-config/master/setup.sh)"
 
