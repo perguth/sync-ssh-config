@@ -112,6 +112,11 @@ class SyncSshConfig {
     } catch (_) {
       console.error(`SSH config is missing under ${this.path.ssh}`)
       process.exit(1)
+      
+      const folderPath = /^(.*\/)/g.exec(this.path.swarm)[0]
+      fs.mkdirSync(folderPath, { mode: 0o700 })
+      fs.writeFileSync(this.path.ssh, '', { flag: 'a', mode: 0o644 })
+      console.log('Created config file:', this.path.ssh)
     }
 
     if (this.conf.swarm.sharedSecret !== this.conf.swarm.previousSharedSecret) {
