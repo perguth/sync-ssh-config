@@ -110,21 +110,18 @@ class SyncSshConfig {
     try {
       this.conf.ssh = fs.readFileSync(this.path.ssh, 'utf8')
     } catch (_) {
-      console.error(`SSH config is missing under ${this.path.ssh}`)
-      process.exit(1)
-      
       const folderPath = /^(.*\/)/g.exec(this.path.swarm)[0]
       fs.mkdirSync(folderPath, { mode: 0o700 })
       fs.writeFileSync(this.path.ssh, '', { flag: 'a', mode: 0o644 })
       console.log('Created config file:', this.path.ssh)
+      fs.utimesSync(this.path.ssh, new Date(0), date)
     }
 
     if (this.conf.swarm.sharedSecret !== this.conf.swarm.previousSharedSecret) {
       console.log('`sharedSecret` changed. Deprecating config.')
       this.conf.swarm.previousSharedSecret = this.conf.swarm.sharedSecret
       this.saveSwarmConf()
-      const date = new Date(0)
-      fs.utimesSync(this.path.ssh, date, date)
+      fs.utimesSync(this.path.ssh, new Date(0), date)
     }
   }
 
