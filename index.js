@@ -96,7 +96,7 @@ class SyncSshConfig {
     }
 
     if (!this.conf.swarm.userName) {
-      console.error(`\`userName\` not configured in ${this.path.swarm}`)
+      console.error(`\`userName\` not configured in \`${this.path.swarm}\``)
       process.exit(1)
     }
 
@@ -113,7 +113,7 @@ class SyncSshConfig {
       const folderPath = /^(.*\/)/g.exec(this.path.swarm)[0]
       fs.mkdirSync(folderPath, { mode: 0o700, recursive: true })
       fs.writeFileSync(this.path.ssh, '', { mode: 0o644, flag: 'a' })
-      console.log('Created config file:', this.path.ssh)
+      console.log(`Created config file \`${this.path.ssh}\``)
       const date = new Date(0)
       fs.utimesSync(this.path.ssh, date, date)
     }
