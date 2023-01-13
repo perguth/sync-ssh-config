@@ -211,6 +211,7 @@ class SyncSshConfig {
     })
 
     console.log('Common group topic:', this.conf.swarm.topic)
+    console.log('Own ID:', this.conf.swarm.keyPair.publicKey)
     swarm.join(Buffer.from(this.conf.swarm.topic, 'hex'))
 
     this.watch()
