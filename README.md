@@ -5,8 +5,6 @@ This script:
 - **Watches** your `~/.ssh/config` for changes
 - Automatically **syncs** changes **with** the **group**
 
-This script does not work for the `root` user.
-
 ## Install
 
 ```bash
