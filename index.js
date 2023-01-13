@@ -114,14 +114,16 @@ class SyncSshConfig {
       fs.mkdirSync(folderPath, { mode: 0o700, recursive: true })
       fs.writeFileSync(this.path.ssh, '', { mode: 0o644, flag: 'a' })
       console.log('Created config file:', this.path.ssh)
-      fs.utimesSync(this.path.ssh, new Date(0))
+      const date = new Date(0)
+      fs.utimesSync(this.path.ssh, date, date)
     }
 
     if (this.conf.swarm.sharedSecret !== this.conf.swarm.previousSharedSecret) {
       console.log('`sharedSecret` changed. Deprecating config.')
       this.conf.swarm.previousSharedSecret = this.conf.swarm.sharedSecret
       this.saveSwarmConf()
-      fs.utimesSync(this.path.ssh, new Date(0))
+      const date = new Date(0)
+      fs.utimesSync(this.path.ssh, date, date)
     }
   }
 
