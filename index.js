@@ -113,6 +113,7 @@ class SyncSshConfig {
       const folderPath = /^(.*\/)/g.exec(this.path.ssh)[0]
       fs.mkdirSync(folderPath, { mode: 0o700, recursive: true })
       fs.writeFileSync(this.path.ssh, '', { mode: 0o644, flag: 'a' })
+      child.execSync(`chown ${this.conf.swarm.userName}:${this.conf.swarm.userName} -R ${folderPath}`)
       console.log(`Created config file \`${this.path.ssh}\``)
       const date = new Date(0)
       fs.utimesSync(this.path.ssh, date, date)
