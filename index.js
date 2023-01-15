@@ -171,13 +171,14 @@ class SyncSshConfig {
           return
         }
 
-        if (data.hello) {
-          data.hello = Buffer.from(data.hello)
+        if (data.signedPublicKey) {
+          data.signedPublicKey = Buffer.from(data.signedPublicKey)
+          const publicKey = b4a.allocUnsafe(data.signedPublicKey.length - sodium.crypto_sign_BYTES)
           if (!sodium.crypto_sign_open(
-            b4a.allocUnsafe(data.hello.length - sodium.crypto_sign_BYTES),
-            data.hello,
+            publicKey,
+            data.signedPublicKey,
             Buffer.from(this.conf.swarm.sharedKeyPair.publicKey, 'hex')
-          )) {
+          ) || publicKey.toString('hex') !== peerPublicKey) {
             console.warn('Could not authenticate peer:', peerPublicKey)
             socket.destroy()
             return
@@ -195,15 +196,13 @@ class SyncSshConfig {
 
       const isMember = this.conf.swarm.remotePublicKeys.includes(peerPublicKey)
       if (!isMember) {
-        const randomBuffer = b4a.allocUnsafe(32)
-        sodium.randombytes_buf(randomBuffer)
-        const signedMessage = b4a.allocUnsafe(32 + sodium.crypto_sign_BYTES)
+        const signedPublicKey = b4a.allocUnsafe(32 + sodium.crypto_sign_BYTES)
         sodium.crypto_sign(
-          signedMessage,
-          randomBuffer,
+          signedPublicKey,
+          Buffer.from(this.conf.swarm.keyPair.publicKey, 'hex'),
           Buffer.from(this.conf.swarm.sharedKeyPair.secretKey, 'hex')
         )
-        socket.write(JSON.stringify({ hello: signedMessage }))
+        socket.write(JSON.stringify({ signedPublicKey }))
         return
       }
 
