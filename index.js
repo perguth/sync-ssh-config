@@ -173,12 +173,12 @@ class SyncSshConfig {
 
         if (data.signedPublicKey) {
           data.signedPublicKey = Buffer.from(data.signedPublicKey)
-          const publicKey = b4a.allocUnsafe(data.signedPublicKey.length - sodium.crypto_sign_BYTES)
+          const signedPublicKey = b4a.allocUnsafe(data.signedPublicKey.length - sodium.crypto_sign_BYTES)
           if (!sodium.crypto_sign_open(
-            publicKey,
+            signedPublicKey,
             data.signedPublicKey,
             Buffer.from(this.conf.swarm.sharedKeyPair.publicKey, 'hex')
-          ) || publicKey.toString('hex') !== peerPublicKey) {
+          ) || signedPublicKey.toString('hex') !== peerPublicKey) {
             console.warn('Could not authenticate peer:', peerPublicKey)
             socket.destroy()
             return
