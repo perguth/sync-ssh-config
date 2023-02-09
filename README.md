@@ -12,7 +12,7 @@ This script:
 # https://nodejs.org/en/download/package-manager/
 
 # Install the systemd service
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/perguth/sync-ssh-config/master/setup.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/perguth/sync-ssh-config/main/setup.sh)"
 
 # Set/copy the `sharedSecret` of the group
 # and set `userName` to your username
